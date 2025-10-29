@@ -1,10 +1,15 @@
 "use client"
 
+import dynamic from "next/dynamic"
 import Link from "next/link"
-import { GL } from "./gl"
 import { Pill } from "./pill"
 import { Button } from "./ui/button"
 import { useState } from "react"
+
+const GL = dynamic(() => import("./gl").then(mod => ({ default: mod.GL })), {
+  ssr: false,
+  loading: () => <div className="w-full h-full bg-black" />
+})
 
 export function Hero() {
   const [hovering, setHovering] = useState(false)
