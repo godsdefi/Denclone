@@ -31,7 +31,7 @@ export function NetworkConstellation() {
   const [hoveredNode, setHoveredNode] = useState<string | null>(null)
   const nodesRef = useRef<Node[]>([])
   const particlesRef = useRef<Particle[]>([])
-  const animationRef = useRef<number>()
+  const animationRef = useRef<number | null>(null)
   const timeRef = useRef(0)
 
   useEffect(() => {
