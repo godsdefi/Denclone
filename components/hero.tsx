@@ -13,9 +13,10 @@ const GL = dynamic(() => import("./gl").then(mod => ({ default: mod.GL })), {
 
 export function Hero() {
   const [hovering, setHovering] = useState(false)
+  const enableGL = process.env.NEXT_PUBLIC_ENABLE_GL === '1'
   return (
     <div className="flex flex-col h-svh justify-between">
-      <GL hovering={hovering} />
+      {enableGL ? <GL hovering={hovering} /> : <div className="w-full h-full bg-black" />}
 
       <div className="pb-16 mt-auto text-center relative">
         <Pill className="mb-6">MEV PROTECTED</Pill>

@@ -8,10 +8,10 @@ import ABI from '../contracts/DenExecutor.abi'
 export const getProvider = () => {
   const rpc = process.env.NEXT_PUBLIC_ETHEREUM_RPC
   if (!rpc) throw new Error('NEXT_PUBLIC_ETHEREUM_RPC is not set')
-  return new ethers.JsonRpcProvider(rpc)
+  return new ethers.providers.JsonRpcProvider(rpc)
 }
 
-export const getContract = (provider?: ethers.Provider) => {
+export const getContract = (provider?: ethers.providers.Provider) => {
   const addr = process.env.NEXT_PUBLIC_DEN_CONTRACT_ADDRESS
   if (!addr) throw new Error('NEXT_PUBLIC_DEN_CONTRACT_ADDRESS not set')
   const p = provider ?? getProvider()
@@ -24,9 +24,8 @@ export const getContractReadOnly = () => {
 
 export const checkArbitrageOpportunity = async (tokenA: string, tokenB: string, amount: string) => {
   const contract = getContract()
-  // use staticCall to avoid state changes (ethers v6)
   try {
-    const result = await contract.checkArbitrageOpportunity.staticCall(tokenA, tokenB, amount)
+    const result = await contract.callStatic.checkArbitrageOpportunity(tokenA, tokenB, amount)
     return { profitable: result[0], profit: result[1] }
   } catch (err) {
     console.error('checkArbitrageOpportunity error', err)
@@ -37,7 +36,7 @@ export const checkArbitrageOpportunity = async (tokenA: string, tokenB: string, 
 export const calculateExpectedProfit = async (tokenA: string, tokenB: string, amount: string, dexPath: string[] = []) => {
   const contract = getContract()
   try {
-    const profit = await contract.calculateExpectedProfit.staticCall(tokenA, tokenB, amount, dexPath)
+    const profit = await contract.callStatic.calculateExpectedProfit(tokenA, tokenB, amount, dexPath)
     return profit
   } catch (err) {
     console.error('calculateExpectedProfit error', err)
@@ -48,7 +47,7 @@ export const calculateExpectedProfit = async (tokenA: string, tokenB: string, am
 export const estimateGasCost = async (dexPath: string[], data: string[] = []) => {
   const contract = getContract()
   try {
-    const gas = await contract.estimateGasCost.staticCall(dexPath, data)
+    const gas = await contract.callStatic.estimateGasCost(dexPath, data)
     return gas
   } catch (err) {
     console.error('estimateGasCost error', err)
@@ -92,9 +91,9 @@ export const listenToContractEvents = (onArbitrageExecuted?: (...args: any[]) =>
 
 export const getSignerContract = async (ethereum: any) => {
   if (!ethereum) throw new Error('No web3 provider provided')
-  const web3Provider = new ethers.BrowserProvider(ethereum)
+  const web3Provider = new ethers.providers.Web3Provider(ethereum)
   await web3Provider.send('eth_requestAccounts', [])
-  const signer = await web3Provider.getSigner()
+  const signer = web3Provider.getSigner()
   const contract = getContract(web3Provider).connect(signer)
   return { contract, signer }
 }
@@ -105,8 +104,6 @@ export type ExecuteTxOptions = {
 
 export const executeOnChain = async (ethereum: any, methodName: string, args: any[] = [], opts?: ExecuteTxOptions) => {
   const { contract } = await getSignerContract(ethereum)
-  // In ethers v6, options are passed as the last argument if it's an object with value/gas/etc
-  const methodArgs = opts?.value ? [...args, { value: opts.value }] : args
-  const tx = await (contract as any)[methodName](...methodArgs)
+  const tx = await (contract as any)[methodName](...args, { value: opts?.value })
   return tx
 }

@@ -6,7 +6,7 @@ import ABI from "../contracts/DenExecutor.abi";
  * Returns a registry object: { name: string, address: string }
  */
 export async function fetchDexRegistry(rpcUrl: string, contractAddress: string) {
-  const provider = new ethers.JsonRpcProvider(rpcUrl);
+  const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
   const contract = new ethers.Contract(contractAddress, ABI, provider);
   const dexNames = [
     "UNISWAP_V2_ROUTER",

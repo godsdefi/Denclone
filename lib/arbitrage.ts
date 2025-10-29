@@ -94,9 +94,9 @@ export class ArbitrageWatcher {
 
         // choose a sensible default amount: 1 WETH or 1000 USDC/DAI/USDT
         const amount = (() => {
-          if (tokenA.toLowerCase() === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2') return ethers.parseEther('1').toString()
+          if (tokenA.toLowerCase() === '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2') return ethers.utils.parseEther('1').toString()
           // USDC/USDT assumed 6 decimals for simplicity here
-          return ethers.parseUnits('1000', 6).toString()
+          return ethers.utils.parseUnits('1000', 6).toString()
         })()
 
         // Try all DEXs (single hop for now)

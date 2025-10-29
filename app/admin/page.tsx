@@ -8,11 +8,11 @@ import { Shield, Pause, Play, AlertTriangle, Settings, TrendingUp, Activity } fr
 
 const GL = dynamic(() => import("@/components/gl").then(mod => ({ default: mod.GL })), {
   ssr: false,
-  loading: () => <div className="w-full h-full bg-black" />
-})
+  loading: function Loading() { return <div className="w-full h-full bg-black" />; }
+});
 
 export default function Admin() {
-  const [systemStatus, setSystemStatus] = useState<"active" | "paused">("active")
+  const [systemStatus, setSystemStatus] = useState<"active" | "paused">("active");
 
   return (
     <>

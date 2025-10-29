@@ -1,10 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Effects } from "@react-three/drei"
 import { Canvas } from "@react-three/fiber"
 import { Particles } from "./particles"
-import { VignetteShader } from "./shaders/vignetteShader"
 
 export const GL = ({ hovering }: { hovering: boolean }) => {
   const [mounted, setMounted] = useState(false)
@@ -23,8 +21,7 @@ export const GL = ({ hovering }: { hovering: boolean }) => {
   const pointSize = 10.0
   const opacity = 0.8
   const planeScale = 10.0
-  const vignetteDarkness = 1.5
-  const vignetteOffset = 0.4
+  // Effects removed to avoid reconciler issues with certain bundles
   const useManualTime = false
   const manualTime = 0
 
@@ -60,13 +57,6 @@ export const GL = ({ hovering }: { hovering: boolean }) => {
           manualTime={manualTime}
           introspect={hovering}
         />
-        <Effects multisamping={0} disableGamma>
-          <shaderPass
-            args={[VignetteShader]}
-            uniforms-darkness-value={vignetteDarkness}
-            uniforms-offset-value={vignetteOffset}
-          />
-        </Effects>
       </Canvas>
     </div>
   )
