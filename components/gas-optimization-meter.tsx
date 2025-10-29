@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 
 export function GasOptimizationMeter() {
   const [savings, setSavings] = useState(0)
-  const [targetSavings, setTargetSavings] = useState(45)
   const [isOptimizing, setIsOptimizing] = useState(false)
   const [gasData, setGasData] = useState({ standard: 0, optimized: 0 })
 
@@ -12,7 +11,6 @@ export function GasOptimizationMeter() {
     const cycle = setInterval(() => {
       setIsOptimizing(true)
       const newTarget = 40 + Math.random() * 25 // 40-65%
-      setTargetSavings(newTarget)
 
       const standardGas = 120000 + Math.random() * 80000
       const optimizedGas = standardGas * (1 - newTarget / 100)

@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Geist_Mono } from "next/font/google"
+import { AnalyticsWrapper } from "@/lib/analytics"
 import "./globals.css"
 import { Header } from "@/components/header"
 import { AppNavigation } from "@/components/app-navigation"
@@ -24,9 +25,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistMono.variable} antialiased`} suppressHydrationWarning>
+         <AnalyticsWrapper>
         <Header />
         <AppNavigation />
         {children}
+         </AnalyticsWrapper>
       </body>
     </html>
   )

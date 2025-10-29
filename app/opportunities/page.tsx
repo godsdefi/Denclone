@@ -94,7 +94,6 @@ function PathVisualization({ path, dexs }: { path: string[]; dexs: string[] }) {
 }
 
 export default function Opportunities() {
-  const [filter, setFilter] = useState("all")
   const [selectedOpp, setSelectedOpp] = useState<number | null>(null)
 
   return (

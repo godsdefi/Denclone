@@ -16,7 +16,7 @@ export default function Dashboard() {
 
   const [opportunities, setOpportunities] = useState<any[]>([])
   const [chartData, setChartData] = useState<number[]>(Array(24).fill(0))
-  const [dexPerformance, setDexPerformance] = useState([
+  const [_dexPerformance, setDexPerformance] = useState([
     { name: "Uniswap V3", volume: 0, trades: 0 },
     { name: "SushiSwap", volume: 0, trades: 0 },
     { name: "Curve", volume: 0, trades: 0 },
@@ -24,7 +24,7 @@ export default function Dashboard() {
   ])
 
   const [walletBalance, setWalletBalance] = useState(30976.82)
-  const [walletChange, setWalletChange] = useState(5.11)
+  const [_walletChange, setWalletChange] = useState(5.11)
   const [revenueThisWeek, setRevenueThisWeek] = useState(671.57)
   const [miniChartData, setMiniChartData] = useState<number[]>(Array(30).fill(0))
   const [cryptoPerformance, setCryptoPerformance] = useState([
@@ -267,8 +267,8 @@ export default function Dashboard() {
                         style={{ height: `${height}%` }}
                       />
                     </div>
-                  )
-                })}
+                    )
+                  })}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                   <div className="bg-foreground/90 backdrop-blur-sm px-2 py-1 rounded-lg">
                     <span className="font-mono text-[9px] md:text-[10px] text-background">
