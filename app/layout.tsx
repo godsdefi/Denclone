@@ -5,6 +5,7 @@ import { AnalyticsWrapper } from "@/lib/analytics"
 import "./globals.css"
 import { Header } from "@/components/header"
 import { AppNavigation } from "@/components/app-navigation"
+import MetaMaskConnectButton from "@/components/ui/metamask-connect"
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
@@ -27,7 +28,10 @@ export default function RootLayout({
       <body className={`${geistMono.variable} antialiased`} suppressHydrationWarning>
          <AnalyticsWrapper>
         <Header />
-        <AppNavigation />
+        <div className="flex flex-row items-center justify-between px-4 py-2">
+          <AppNavigation />
+          <MetaMaskConnectButton className="ml-4" />
+        </div>
         {children}
          </AnalyticsWrapper>
       </body>

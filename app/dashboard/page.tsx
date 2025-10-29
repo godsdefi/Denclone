@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button"
 import { GL } from "@/components/gl"
 import { ArrowUpRight, ArrowDownRight, RefreshCw } from "lucide-react"
 import Link from "next/link"
+import ExecutionHistory from '@/components/execution-history'
+import OpportunityExecutor from '@/components/opportunity-executor'
 
 export default function Dashboard() {
   const [metrics, setMetrics] = useState({
@@ -320,7 +322,17 @@ export default function Dashboard() {
               <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-primary/5 pointer-events-none" />
             </div>
           </div>
-
+          <div className="grid lg:grid-cols-3 gap-2 md:gap-3 mb-3 md:mb-4">
+            <div className="lg:col-span-2">
+              {/* Live Opportunities Section (existing) */}
+            </div>
+            <div>
+              <OpportunityExecutor />
+              <div className="mt-3">
+                <ExecutionHistory />
+              </div>
+            </div>
+          </div>
           {/* Live Opportunities Section */}
           <div className="bg-foreground/5 backdrop-blur-sm rounded-xl md:rounded-2xl p-3 md:p-4 border border-foreground/10">
             <div className="flex items-center justify-between mb-3 md:mb-4">
